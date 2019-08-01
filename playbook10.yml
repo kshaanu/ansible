@@ -1,0 +1,50 @@
+---
+- hosts: all 
+  become: yes
+  vars:
+    xmx_size: 512m
+    max_perm_size:  256m
+    additional_configurations:
+      - tomcat8-docs 
+      - tomcat8-admin
+      - tomcat8-examples
+    tomcat: anusha 
+    password: kakunulla
+  tasks:
+  - name: update packages 
+    apt: 
+      name: "{{ update }}" 
+      update_cache: yes
+      state: present
+  - name: install tomcat8
+    package:
+       name: tomcat8
+       state: present
+  - name: install tomcat8
+    template:
+      src: /home/ansible/templates/tomcat8.j2
+      dest: /etc/default/tomcat8
+    notify:
+    - tomcat8
+  - name: install aditional configurations 
+    apt: 
+       name: "{{ item }}" 
+       state: present
+    loop: "{{ additional_configurations }}"
+  - name: copy file 
+    template:
+       src: templates/tomcat-users.xml.j2
+       dest: /home/ansible/templates
+    notify:
+    - tomcat8 restart service
+  handlers:    
+  - name: restart tomtcat8 service
+    service:
+      name: tomcat8 restart 
+      state: restarted 
+  - name: install gof 
+    get_url:
+      url: https://g-life.s3.amazonaws.com/gameoflife.war
+      dest: /var/lib/tomcat8/webapps  
+    
+
