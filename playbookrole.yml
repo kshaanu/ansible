@@ -1,0 +1,16 @@
+- hosts: servers
+  become: true
+  vars:
+    tomcat_version: 8.5.23
+    
+    tomcat_permissions_production: True
+    
+    tomcat_users:
+      - username: "anusha"
+        password: "kakunulla"
+        roles: "tomcat,admin,manager,manager-gui"
+      - username: "ANUSHA"
+        password: "KAKUNULLA"
+        roles: "tomcat"        
+  roles:
+    - role: zaxos.tomcat-ansible-role

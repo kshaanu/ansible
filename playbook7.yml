@@ -1,0 +1,33 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: update
+    package:
+      name: "{{ updation }}"
+      update_cache: yes
+  - name: display what updated
+    debug:
+      msg: update "{{ updation }}" completed
+  - name: install
+    package:
+      name: "{{ server }}"
+      state: present
+  - name: display what installed
+    debug:
+      msg: installation "{{ server }}" completed
+  - name: install packages
+    package:
+      name: "{{ item }}"
+      state: present
+    loop:
+     - php
+     - php-mysql
+    notify:
+    - restart server
+  handlers:
+  - name: restart server
+    service:
+      name: server
+      state: restarted
+

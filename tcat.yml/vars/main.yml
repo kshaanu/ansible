@@ -1,0 +1,11 @@
+---
+# vars file for tcat.yml
+  - name: update packages
+    apt:
+      name: update
+      update_cache: yes
+      state: present
+  - name: install tomcat8
+    package:
+      name: tomcat8
+      state: present

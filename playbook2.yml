@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: update
+    apt:
+      name: apache2
+      update_cache: yes
+      state: present
+- hosts: all
+  become: yes
+  tasks: 
+  - name: git
+    apt:
+      name: git

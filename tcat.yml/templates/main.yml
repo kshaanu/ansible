@@ -1,0 +1,8 @@
+  - name: install tomcat8
+    template:
+      src: /home/ansible/templates/tomcat8.j2
+      dest: etc/default/tomcat8
+  - name: copy file
+    template:
+      src: templates/tomcat-users.j2
+      dest: /home/ansible/templates

@@ -1,0 +1,6 @@
+---
+# handlers file for tcat.yml
+ - name: restart tomtcat8 service
+   service:
+     name: tomcat8 restart
+     state: restarted

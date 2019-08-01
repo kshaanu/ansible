@@ -1,0 +1,20 @@
+---
+# tasks file for tcat.yml
+  - name: update packages
+    apt:
+      name: update
+      update_cache: yes
+      state: present
+  - name: install tomcat8
+    package:
+      name: tomcat8
+      state: present
+  - name: install aditional configurations
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ additional_configurations }}"
+  - name: copy game of life war into tomcat
+    get_url:
+      url: "{{ war_location }}"
+      dest: "/var/lib/tomcat8/webapps/{{ war_file_name }}"
